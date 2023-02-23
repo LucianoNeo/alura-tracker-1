@@ -1,7 +1,6 @@
 import clienteHttp from "@/http";
 import {
   INotificacao,
-  TipoNotificacao,
 } from "@/interfaces/INotificacao";
 import IProjeto from "@/interfaces/IProjeto";
 import { InjectionKey } from "vue";
@@ -10,7 +9,7 @@ import {
   Store,
   useStore as vuexUseStore,
 } from "vuex";
-import { OBTER_PROJETOS } from "./tipo-acoes";
+import { CADASTRAR_PROJETO, OBTER_PROJETOS, REMOVER_PROJETO } from "./tipo-acoes";
 import {
   ADICIONA_PROJETO,
   ALTERA_PROJETO,
@@ -60,7 +59,21 @@ export const store = createStore<Estado>({
   },
   actions: {
     [OBTER_PROJETOS]({ commit }) {
-      clienteHttp.get("projetos").then((resposta) => commit(DEFINIR_PROJETOS, resposta.data));
+      clienteHttp.get("projetos")
+      .then((resposta) => commit(DEFINIR_PROJETOS, resposta.data));
+      
+    },
+    [CADASTRAR_PROJETO](contexto, nomeDoProjeto: string) {
+      return clienteHttp.post("projetos",{
+        nome: nomeDoProjeto
+      })
+    },
+    [ALTERA_PROJETO](contexto, projeto: IProjeto) {
+      return clienteHttp.put(`projetos/${projeto.id}`,projeto)
+    },
+    [REMOVER_PROJETO]({ commit }, id: string) {
+      return clienteHttp.delete(`projetos/${id}`)
+      .then(()=> commit(EXCLUIR_PROJETO,id))
     },
   },
 });
