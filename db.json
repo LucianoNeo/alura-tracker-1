@@ -12,7 +12,7 @@
   "tarefas": [
     {
       "duracaoEmSegundos": 2,
-      "descricao": "tarefa12",
+      "descricao": "tarefa12 edit",
       "projeto": {
         "id": 1,
         "nome": "Alura Tracker"
@@ -27,6 +27,15 @@
         "id": 2
       },
       "id": 2
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "nova tarefa",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 3
     }
   ]
 }
