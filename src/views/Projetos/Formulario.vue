@@ -24,7 +24,7 @@
 <script lang="ts">
 import { TipoNotificacao } from "@/interfaces/INotificacao";
 import { ALTERAR_PROJETO } from "@/store/tipo-acoes";
-import { defineComponent } from "vue";
+import { defineComponent,ref } from "vue";
 import { useStore } from "../../store/";
 import useNotificador from "@/hooks/notificador";
 import { CADASTRAR_PROJETO } from "@/store/tipo-acoes";
@@ -35,19 +35,6 @@ export default defineComponent({
     id: {
       type: String,
     },
-  },
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projeto.projetos.find(
-        (proj) => proj.id == this.id
-      );
-      this.nomeDoProjeto = projeto?.nome || "";
-    }
-  },
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
   },
   methods: {
     salvar() {
@@ -75,12 +62,20 @@ export default defineComponent({
           this.$router.push("/projetos");
     }
   },
-  setup() {
+  setup(props) {
     const store = useStore();
     const { notificar } = useNotificador();
+    const nomeDoProjeto = ref('')
+    if (props.id) {
+      const projeto = store.state.projeto.projetos.find(
+        (proj) => proj.id == props.id
+      );
+      nomeDoProjeto.value = projeto?.nome || "";
+    }
     return {
       store,
       notificar,
+      nomeDoProjeto
     };
   },
 });
