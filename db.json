@@ -3,7 +3,30 @@
     {
       "id": 1,
       "nome": "Alura Tracker"
+    },
+    {
+      "nome": "Utilizar Pinia",
+      "id": 2
+    }
+  ],
+  "tarefas": [
+    {
+      "duracaoEmSegundos": 2,
+      "descricao": "tarefa12",
+      "projeto": {
+        "id": 1,
+        "nome": "Alura Tracker"
+      },
+      "id": 1
+    },
+    {
+      "duracaoEmSegundos": 4,
+      "descricao": "tarefa22",
+      "projeto": {
+        "nome": "Utilizar Pinia",
+        "id": 2
+      },
+      "id": 2
     }
   ]
-  
 }
