@@ -22,40 +22,29 @@
     />
     <Box v-if="listaEstaVazia"> Você não está muito produtivo hoje :( </Box>
 
-    <div
-      class="modal"
-      :class="{ 'is-active': tarefaSelecionada }"
-      v-if="tarefaSelecionada"
-    >
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Editando tarefa</p>
-          <button
-            @click="fecharModal"
-            class="delete"
-            aria-label="close"
-          ></button>
-        </header>
-        <section class="modal-card-body">
-          <div class="field">
-            <label for="descricaoDaTarefa" class="label"> Descrição </label>
-            <input
-              type="text"
-              class="input"
-              v-model="tarefaSelecionada.descricao"
-              id="descricaoDaTarefa"
-            />
-          </div>
-        </section>
-        <footer class="modal-card-foot">
-          <button @click="alterarTarefa" class="button is-success">
-            Salvar alterações
-          </button>
-          <button @click="fecharModal" class="button">Cancelar</button>
-        </footer>
-      </div>
-    </div>
+    <Modal :mostrar="tarefaSelecionada != null">
+      <template v-slot:cabecalho>
+        <p class="modal-card-title">Editando tarefa</p>
+        <button @click="fecharModal" class="delete" aria-label="close"></button>
+      </template>
+      <template v-slot:corpo>
+        <div class="field">
+          <label for="descricaoDaTarefa" class="label"> Descrição </label>
+          <input
+            type="text"
+            class="input"
+            v-model="tarefaSelecionada!.descricao"
+            id="descricaoDaTarefa"
+          />
+        </div>
+      </template>
+      <template v-slot:rodape>
+        <button @click="alterarTarefa" class="button is-success">
+          Salvar alterações
+        </button>
+        <button @click="fecharModal" class="button">Cancelar</button>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -64,6 +53,7 @@ import { defineComponent, computed, ref, watchEffect } from "vue";
 import Formulario from "../components/Formulario.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
+import Modal from "../components/Modal.vue";
 import { useStore } from "@/store";
 import {
   ALTERAR_TAREFA,
@@ -79,6 +69,7 @@ export default defineComponent({
     Formulario,
     Tarefa,
     Box,
+    Modal,
   },
   data() {
     return {
